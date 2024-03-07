@@ -7,12 +7,9 @@ import {data} from "autoprefixer";
 
 function Card() {
 
-        // 2. Create our *dogImage* variable as well as the *setDogImage* function via useState
-        // We're setting the default value of dogImage to null, so that while we wait for the
-        // fetch to complete, we dont attempt to render the image
-        let [urlArray, setUrlArray] = useState(null)
+     let [urlArray, setUrlArray] = useState(null)
 
-        // 3. Create out useEffect function
+
     useEffect(() => {
         const interval = setInterval(() => {
             fetch("https://localhost:7046/api/Users/getImages")
