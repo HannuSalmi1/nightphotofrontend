@@ -1,68 +1,50 @@
 'use client'
 import { useState } from 'react';
 
-export default function RegisterForm() {
-    const [Firstname, setFirstname] = useState('');
-    const [Lastname, setLastname] = useState('');
+export default function SignInForm() {
+
     const [Username, setUsername] = useState('');
-    const [Email, setEmail] = useState('');
+
     const [Password, setPassword] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch('https://localhost:7046/api/Users/', {
+        const response = await fetch('https://localhost:7046/api/Users/authenticate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
 
             },
             body: JSON.stringify({
-                Firstname,
-                Lastname,
+
                 Username,
-                Email,
-                Password,
+
+                Password
             }),
         });
 
-        // handle response
+        response.json().then(data => {
+            let jwtToken = data.token;
+
+        });
     };
 
 
-    return <div className="bg-gray-900 min-h-screen flex items-center justify-center">
+    return <div className="">
         <form onSubmit={handleSubmit}
               className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-                <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full ">
-                    <h1 className="mb-8 text-3xl text-center">Register</h1>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="firstname"
+                <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                    <h1 className="mb-8 text-3xl text-center">Sign Up</h1>
 
-                        value={Firstname} onChange={e => setFirstname(e.target.value)}
-                        placeholder="Firstname"/>
-
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="lastname"
-                        value={Lastname} onChange={e => setLastname(e.target.value)}
-                        placeholder="Lastname"/>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded mb-4"
                         name="username"
                         value={Username} onChange={e => setUsername(e.target.value)}
                         placeholder="Username"/>
-                    <input
 
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="email"
-                        value={Email} onChange={e => setEmail(e.target.value)}
-                        placeholder="Email"/>
 
                     <input
                         type="password"
@@ -70,11 +52,7 @@ export default function RegisterForm() {
                         name="password"
                         value={Password} onChange={e => setPassword(e.target.value)}
                         placeholder="Password"/>
-                    <input
-                        type="password"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="confirm_password"
-                        placeholder="Confirm Password"/>
+
 
                     <button
                         type="submit"
@@ -104,6 +82,3 @@ export default function RegisterForm() {
     </div>
 
 }
-
-
-
