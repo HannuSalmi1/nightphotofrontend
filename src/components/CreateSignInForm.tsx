@@ -2,33 +2,50 @@ import React, { useState, FormEvent } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 interface SignInForm {
-
-    username: string;
-
-    password: string;
+    Username: string;
+    Password: string;
 }
 
 export default function CreateSignInForm() {
     const [signInForm, setSignInForm] = useState<SignInForm>({
-
-        username: '',
-
-        password: '',
+        Username: '',
+        Password: '',
     });
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const response = await fetch('https://backend:5000/api/Users/', {
+        const response = await fetch('https://localhost:5000/api/Users/authenticate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(signInForm),
         });
-
-        // handle response
-    };
+    
+        if (response.ok) { // Check if the first fetch succeeded
+            try {
+                const validityResponse = await fetch('https://localhost:5000/api/Users/checkValidity', {
+                    method: 'GET',
+                    credentials: 'include', // This is crucial
+                });
+    
+                if (validityResponse.ok && validityResponse.headers.get("Content-Type")?.includes("application/json")) {
+                    const data = await validityResponse.json();
+                    if (data.message === "JWT is valid") {
+                        console.log("JWT validation successful:", data.message);
+                        // Perform actions based on successful JWT validation here
+                    } else {
+                        console.log("JWT validation failed or message is unexpected:", data.message);
+                        // Handle unexpected message or failed validation
+                    }
+                } else {
+                    throw new Error('Response was not JSON');
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }};
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSignInForm({ ...signInForm, [event.target.name]: event.target.value });
@@ -44,8 +61,8 @@ export default function CreateSignInForm() {
                         <Form.Control
                             type="text"
                             placeholder="Username"
-                            name="username"
-                            value={signInForm.username}
+                            name="Username"
+                            value={signInForm.Username}
                             onChange={handleChange}
                         />
                     </Col>
@@ -56,8 +73,8 @@ export default function CreateSignInForm() {
                         <Form.Control
                             type="password"
                             placeholder="Password"
-                            name="password"
-                            value={signInForm.password}
+                            name="Password"
+                            value={signInForm.Password}
                             onChange={handleChange}
                         />
                     </Col>
