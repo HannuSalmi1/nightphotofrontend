@@ -17,35 +17,32 @@ export default function CreateSignInForm() {
 
         const response = await fetch('https://localhost:5000/api/Users/authenticate', {
             method: 'POST',
+            credentials: 'include', // This is crucial for including cookies
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(signInForm),
         });
     
-        if (response.ok) { // Check if the first fetch succeeded
-            try {
-                const validityResponse = await fetch('https://localhost:5000/api/Users/checkValidity', {
-                    method: 'GET',
-                    credentials: 'include', // This is crucial
-                });
+        if (response.ok) {
+            console.log("Authentication successful");
+            const validityResponse = await fetch('https://localhost:5000/api/Users/checkValidity', {
+                method: 'GET',
+                credentials: 'include', // This is crucial for including cookies
+            });
     
-                if (validityResponse.ok && validityResponse.headers.get("Content-Type")?.includes("application/json")) {
-                    const data = await validityResponse.json();
-                    if (data.message === "JWT is valid") {
-                        console.log("JWT validation successful:", data.message);
-                        // Perform actions based on successful JWT validation here
-                    } else {
-                        console.log("JWT validation failed or message is unexpected:", data.message);
-                        // Handle unexpected message or failed validation
-                    }
-                } else {
-                    throw new Error('Response was not JSON');
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
+            if (validityResponse.ok) {
+                console.log("Cookie test successful, cookies are included");
+                // Handle success scenario when cookies are included
+            } else {
+                console.error("Cookie test failed, cookies might not be included");
+                // Handle failure scenario
             }
-        }};
+        } else {
+            console.error("Authentication failed");
+            // Handle authentication failure
+        }
+    };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSignInForm({ ...signInForm, [event.target.name]: event.target.value });
