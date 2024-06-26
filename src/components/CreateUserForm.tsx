@@ -7,6 +7,7 @@ interface UserForm {
     username: string;
     email: string;
     password: string;
+    role: string;
 }
 
 export default function CreateUserForm() {
@@ -16,12 +17,13 @@ export default function CreateUserForm() {
         username: '',
         email: '',
         password: '',
+        role: 'user'
     });
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const response = await fetch('https://backend:5000/api/Users/', {
+        const response = await fetch('https://localhost:5000/api/Users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
