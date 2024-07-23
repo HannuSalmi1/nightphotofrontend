@@ -1,44 +1,45 @@
-
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-// If you know the structure of your data, define it here
 type ImageData = {
-  [key: string]: string; // Assuming each key in the data is a string and maps to a string URL
+  [key: string]: string;
 };
 
 const Card: React.FC = () => {
-  // Initialize urlArray with an empty array and set its type to string[]
   const [urlArray, setUrlArray] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
       fetch("https://localhost:5000/api/Users/getImages")
         .then(response => response.json())
         .then(data => {
-          // Cast the data to the ImageData type and then get its values
           const imageUrls = Object.values(data as ImageData);
           setUrlArray(imageUrls);
         })
         .catch(error => console.error(error));
-    }, 5000); // Fetches data every 5 seconds
+    }, 5000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, []);
+
+  const handleImageClick = (url: string) => {
+    navigate('/PhotoPage', { state: { url: 'https://localhost:5000' + url.substring(7) } });
+  };
 
   if (urlArray.length === 0) {
     return <div style={{ color: 'white' }}>waiting for data...</div>;
   }
-
-  // Removed the standalone map that was logging to the console
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gridAutoRows: '15fr', gridGap: '10px', width: '100%' }}>
       {urlArray.map((url, index) => (
         <div key={index}
              className="max-w-sm rounded overflow-hidden shadow-lg"
-             style={{ transition: 'transform .2s' }} // Smooth transition
-             onMouseOver={event => (event.currentTarget.style.transform = 'scale(1.05)')} // Scale up on hover
-             onMouseOut={event => (event.currentTarget.style.transform = 'scale(1)')} // Scale down when not hovered
+             style={{ transition: 'transform .2s', cursor: 'pointer' }}
+             onMouseOver={event => (event.currentTarget.style.transform = 'scale(1.05)')}
+             onMouseOut={event => (event.currentTarget.style.transform = 'scale(1)')}
+             onClick={() => handleImageClick(url)}
         >
           <img className="w-full" src={'https://localhost:5000' + url.substring(7)} alt="Sunset in the mountains" style={{ width: '400px', height: '400px', objectFit: 'cover' }} />
           <div className="px-6 py-4">
