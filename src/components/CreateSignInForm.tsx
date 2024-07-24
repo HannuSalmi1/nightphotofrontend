@@ -6,12 +6,14 @@ import AuthContext  from '../AuthContext';
 interface SignInForm {
     Username: string;
     Password: string;
+    IsLoggedIn: 0;
 }
 
 export default function CreateSignInForm() {
     const [signInForm, setSignInForm] = useState<SignInForm>({
         Username: '',
         Password: '',
+        IsLoggedIn: 0
     });
 
     const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
@@ -38,11 +40,15 @@ useEffect(() => {
             const validityResponse = await fetch('https://localhost:5000/api/Users/checkValidity', {
                 method: 'GET',
                 credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json', 
+                  },
             });
     
             if (validityResponse.ok) {
                 console.log("Cookie test successful, cookies are included");
                 setIsAuthenticated(true);
+                window.location.href = '/';
                 
             } else {
                 console.error("Cookie test failed, cookies might not be included");
@@ -88,7 +94,7 @@ useEffect(() => {
                             />
                         </Col>
                     </Form.Group>
-                    <Button variant="primary" type="submit" className="w-100">
+                    <Button variant="primary" type="submit" className="w-100" >
                         Log In
                     </Button>
                 </Form>

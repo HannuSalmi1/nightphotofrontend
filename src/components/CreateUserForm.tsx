@@ -31,7 +31,8 @@ export default function CreateUserForm() {
             body: JSON.stringify(userForm),
         });
 
-        // handle response
+       if (response.ok)
+       {window.location.href = 'Login';}
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

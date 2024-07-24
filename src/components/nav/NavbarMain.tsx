@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import '../../App.css';
 import AuthContext from '../../AuthContext';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-
 function NavbarMain() {
-  
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext); // Destructure both isAuthenticated and setIsAuthenticated from the context
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const logoutTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const INACTIVITY_TIMEOUT = 1 * 60 * 1000; // 1 minutes
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -26,6 +26,38 @@ function NavbarMain() {
 
     checkAuthStatus();
   }, [setIsAuthenticated]);
+
+  const handleLogout = async () => {
+    await fetch('https://localhost:5000/api/Users/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    setIsAuthenticated(false);
+  };
+
+  const resetLogoutTimeout = () => {
+    if (logoutTimeoutRef.current) {
+      clearTimeout(logoutTimeoutRef.current);
+    }
+    logoutTimeoutRef.current = setTimeout(handleLogout, INACTIVITY_TIMEOUT);
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      resetLogoutTimeout();
+      window.addEventListener('mousemove', resetLogoutTimeout);
+      window.addEventListener('keypress', resetLogoutTimeout);
+    }
+
+    return () => {
+      if (logoutTimeoutRef.current) {
+        clearTimeout(logoutTimeoutRef.current);
+      }
+      window.removeEventListener('mousemove', resetLogoutTimeout);
+      window.removeEventListener('keypress', resetLogoutTimeout);
+    };
+  }, [isAuthenticated]);
 
 
 
@@ -47,7 +79,7 @@ function NavbarMain() {
                     <DropdownButton id="dropdown-basic-button" title="SIGNED IN" variant="warning">
       <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
       <Dropdown.Item href="#/action-2">Artist Page</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Log out</Dropdown.Item>
+      <Dropdown.Item onClick={handleLogout}>Log out</Dropdown.Item>
     </DropdownButton>
               </Nav>
             )}
