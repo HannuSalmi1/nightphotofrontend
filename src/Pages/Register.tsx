@@ -1,4 +1,4 @@
-import React from 'react'
+
 import CreateUserForm from '../components/CreateUserForm'
 import NavbarMain from '../components/nav/NavbarMain'
 

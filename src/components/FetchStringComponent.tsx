@@ -7,7 +7,7 @@ const FetchStringComponent: React.FC = () => {
     // Function to fetch data from the server
     const fetchData = async () => {
       try {
-        const response = await fetch('https://localhost:5000/api/Users/test');
+        const response = await fetch('https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/api/Users/test');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

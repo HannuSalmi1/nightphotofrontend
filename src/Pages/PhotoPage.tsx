@@ -1,18 +1,20 @@
 // PhotoPage.tsx
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../components/nav/NavbarMain';
 
 const PhotoPage: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const imageUrl = location.state?.url; // Assuming the image URL is passed as state
+  
+  const imageUrl = location.state?.url;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Implement your logic to submit the comment
+    
+
+
     console.log("Comment submitted");
-    navigate(-1); // Navigate back to the previous page after submitting
+   // navigate(-1); // Navigate back to the previous page after submitting
   };
 
   return (

@@ -8,12 +8,14 @@ import Login from './Pages/Login.tsx';
 import PhotoPage from './Pages/PhotoPage.tsx';
 // Import AuthProvider
 import { AuthProvider } from './AuthContext'; // Adjust the import path as necessary
+import UploadForm from './components/UploadImageForm.tsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
   { path: '/register', element: <Register/> },
   { path: '/login', element: <Login/> },
   { path: '/PhotoPage', element: <PhotoPage/> },
+  { path: '/UploadImage', element: <UploadForm/> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

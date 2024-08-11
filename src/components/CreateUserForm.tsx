@@ -23,7 +23,7 @@ export default function CreateUserForm() {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const response = await fetch('https://localhost:5000/api/Users', {
+        const response = await fetch('https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/api/Users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

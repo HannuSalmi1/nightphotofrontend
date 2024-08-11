@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FormEvent, useContext } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import NavbarMain from './nav/NavbarMain';
+
 import AuthContext  from '../AuthContext';
 
 interface SignInForm {
@@ -26,7 +26,7 @@ useEffect(() => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const response = await fetch('https://localhost:5000/api/Users/authenticate', {
+        const response = await fetch('https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/api/Users/authenticate', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -37,7 +37,7 @@ useEffect(() => {
     
         if (response.ok) {
             
-            const validityResponse = await fetch('https://localhost:5000/api/Users/checkValidity', {
+            const validityResponse = await fetch('https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/api/Users/checkValidity', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

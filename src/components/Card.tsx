@@ -11,7 +11,7 @@ const Card: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("https://localhost:5000/api/Users/getImages")
+      fetch("https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/api/Users/getImages")
         .then(response => response.json())
         .then(data => {
           const imageUrls = Object.values(data as ImageData);
@@ -24,7 +24,7 @@ const Card: React.FC = () => {
   }, []);
 
   const handleImageClick = (url: string) => {
-    navigate('/PhotoPage', { state: { url: 'https://localhost:5000' + url.substring(7) } });
+    navigate('/PhotoPage', { state: { url: 'https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/' + url.substring(7) } });
   };
 
   if (urlArray.length === 0) {
@@ -41,7 +41,7 @@ const Card: React.FC = () => {
              onMouseOut={event => (event.currentTarget.style.transform = 'scale(1)')}
              onClick={() => handleImageClick(url)}
         >
-          <img className="w-full" src={'https://localhost:5000' + url.substring(7)} alt="Sunset in the mountains" style={{ width: '400px', height: '400px', objectFit: 'cover' }} />
+          <img className="w-full" src={'https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/' + url.substring(7)} alt="Sunset in the mountains" style={{ width: '400px', height: '400px', objectFit: 'cover' }} />
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2 text-amber-600">The Coldest Sunset</div>
             <p className="text-white text-base">

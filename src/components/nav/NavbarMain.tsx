@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import '../../App.css';
 import AuthContext from '../../AuthContext';
@@ -12,7 +12,7 @@ function NavbarMain() {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      const response = await fetch('https://localhost:5000/api/Users/checkValidity', {
+      const response = await fetch('https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/api/Users/checkValidity', {
         method: 'GET',
         credentials: 'include',
       });
@@ -24,11 +24,15 @@ function NavbarMain() {
       }
     };
 
+
+
     checkAuthStatus();
   }, [setIsAuthenticated]);
 
+  console.log(isAuthenticated);
+
   const handleLogout = async () => {
-    await fetch('https://localhost:5000/api/Users/logout', {
+    await fetch('https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/api/Users/logout', {
       method: 'POST',
       credentials: 'include',
     });
@@ -72,7 +76,7 @@ function NavbarMain() {
           
                 <Nav.Link href="Login">Login</Nav.Link>
                 <Nav.Link href="Register">Register</Nav.Link>
-              
+                <Nav.Link href="UploadImage">Upload Image</Nav.Link>
             
             {isAuthenticated && (
               <Nav className="ms-auto">
