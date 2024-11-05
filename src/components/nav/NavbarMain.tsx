@@ -8,7 +8,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 function NavbarMain() {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const logoutTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const INACTIVITY_TIMEOUT = 1 * 60 * 1000; // 1 minutes
+  const INACTIVITY_TIMEOUT = 1 * 60 * 30000; // 30minuuttia
 
   useEffect(() => {
     const checkAuthStatus = async () => {

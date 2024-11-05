@@ -1,20 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import mkcert from 'vite-plugin-mkcert'
 
 export default defineConfig({
  base: "/",
- plugins: [react(), mkcert()],
+ plugins: [react()],
  preview: {
-  port: 3001,
+  port: 8080,
   strictPort: true,
  },
- server: { 
-  https: true ,
-  port: 3000,
+ server: {
+  port: 8080,
   strictPort: true,
   host: true,
-  origin: "https://0.0.0.0:3000",
-  
+  origin: "http://0.0.0.0:8080",
  },
 });

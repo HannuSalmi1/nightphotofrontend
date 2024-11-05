@@ -43,7 +43,7 @@ const Card: React.FC = () => {
         >
           <img className="w-full" src={'https://nphotoapi-ascra0avhfaedzfh.northeurope-01.azurewebsites.net/' + url.substring(7)} alt="Sunset in the mountains" style={{ width: '400px', height: '400px', objectFit: 'cover' }} />
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2 text-amber-600">The Coldest Sunset</div>
+            <div className="font-bold text-xl mb-2 text-amber-600">THE IMAGE</div>
             <p className="text-white text-base">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores
               et perferendis eaque, exercitationem praesentium nihil.

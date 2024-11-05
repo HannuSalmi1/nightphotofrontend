@@ -2,13 +2,16 @@ FROM node:18-alpine
 
 WORKDIR /nightphotofrontend
 
-COPY ./package.json   .
+COPY package.json .
 
-RUN npm install --silent
+RUN npm install
+
+RUN npm i -g serve
 
 COPY . .
 
+RUN npm run build
+
 EXPOSE 3000
 
-# Start your frontend application
-CMD [ "npm", "run", "dev" ]
+CMD [ "serve", "-s", "dist" ]
