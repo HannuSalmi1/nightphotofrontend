@@ -11,7 +11,9 @@
     "start": "vite"
   },
   "dependencies": {
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "http-proxy-middleware": "^3.0.3",
     "nightphotofrontend": "file:",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
