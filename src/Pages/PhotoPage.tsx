@@ -1,3 +1,4 @@
+// PhotoPage.tsx
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../components/nav/NavbarMain';
@@ -13,7 +14,7 @@ const PhotoPage: React.FC = () => {
     console.log("Form submitted with comment:", comment);
 
     try {
-      const response = await fetch('/api/process-payload', {
+      const response = await fetch('https://localhost:8082/process-payload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
