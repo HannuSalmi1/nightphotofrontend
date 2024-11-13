@@ -13,6 +13,11 @@ const PhotoPage: React.FC = () => {
     event.preventDefault();
     console.log("Form submitted with comment:", comment);
   
+    if (!comment) {
+      console.error("Comment is undefined or null");
+      return;
+    }
+  
     const requestBody = JSON.stringify({ inputText: comment });
     console.log("Request Body:", requestBody);
   
