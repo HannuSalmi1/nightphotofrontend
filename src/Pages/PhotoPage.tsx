@@ -19,7 +19,7 @@ const PhotoPage: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data: comment }),
+        body: JSON.stringify({ inputText: comment }),
       });
 
       if (response.ok) {
