@@ -14,7 +14,7 @@ const PhotoPage: React.FC = () => {
     console.log("Form submitted with comment:", comment);
 
     try {
-      const response = await fetch('https://nptld-kn37kl.5sc6y6-1.usa-e2.cloudhub.io/', {
+      const response = await fetch('https://nptld-kn37kl.5sc6y6-4.usa-e2.cloudhub.io/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
