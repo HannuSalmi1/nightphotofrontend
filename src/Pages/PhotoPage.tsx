@@ -12,21 +12,24 @@ const PhotoPage: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Form submitted with comment:", comment);
-
+  
+    const requestBody = JSON.stringify({ inputText: comment });
+    console.log("Request Body:", requestBody);
+  
     try {
       const response = await fetch('https://nptld-kn37kl.5sc6y6-2.usa-e2.cloudhub.io/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ inputText: comment }),
+        body: requestBody,
       });
-
+  
       if (response.ok) {
         console.log("Comment submitted successfully");
         // navigate(-1); // Uncomment if you want to navigate back after submitting
       } else {
-        console.error("Failed to submit comment");
+        console.error("Failed to submit comment", response.status, response.statusText);
       }
     } catch (error) {
       console.error("Error submitting comment:", error);
