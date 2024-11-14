@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import '../../App.css';
 import AuthContext from '../../AuthContext';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -8,7 +9,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 function NavbarMain() {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const logoutTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const INACTIVITY_TIMEOUT = 1 * 60 * 30000; // 30minuuttia
+  const INACTIVITY_TIMEOUT = 1 * 60 * 30000; // 30 minutes
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -23,8 +24,6 @@ function NavbarMain() {
         setIsAuthenticated(false);
       }
     };
-
-
 
     checkAuthStatus();
   }, [setIsAuthenticated]);
@@ -63,28 +62,23 @@ function NavbarMain() {
     };
   }, [isAuthenticated]);
 
-
-
-
   return (
     <>
       <Navbar bg="dark" data-bs-theme="dark" fixed="top">
         <Container>
-          <Navbar.Brand href="#home" className="navbar-brand-custom">NightPhoto</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/" className="navbar-brand-custom">NightPhoto</Navbar.Brand>
           <Nav className="ms-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-          
-                <Nav.Link href="Login">Login</Nav.Link>
-                <Nav.Link href="Register">Register</Nav.Link>
-                <Nav.Link href="UploadImage">Upload Image</Nav.Link>
-            
+            <Nav.Link as={Link} to="/">Home</Nav.Link>
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>
+            <Nav.Link as={Link} to="/register">Register</Nav.Link>
+            <Nav.Link as={Link} to="/uploadimage">Upload Image</Nav.Link>
             {isAuthenticated && (
               <Nav className="ms-auto">
-                    <DropdownButton id="dropdown-basic-button" title="SIGNED IN" variant="warning">
-      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Artist Page</Dropdown.Item>
-      <Dropdown.Item onClick={handleLogout}>Log out</Dropdown.Item>
-    </DropdownButton>
+                <DropdownButton id="dropdown-basic-button" title="SIGNED IN" variant="warning">
+                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">Artist Page</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Log out</Dropdown.Item>
+                </DropdownButton>
               </Nav>
             )}
           </Nav>
