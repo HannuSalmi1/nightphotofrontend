@@ -32,7 +32,7 @@ export default function CreateUserForm() {
         });
 
        if (response.ok)
-       {window.location.href = 'Login';}
+       {window.location.href = 'login';}
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
